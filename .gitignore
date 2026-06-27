@@ -1,0 +1,22 @@
+# Build output
+/out/
+*.o
+*.obj
+*.a
+
+# Fuzzer artifacts
+crash-*
+leak-*
+oom-*
+timeout-*
+fuzz-*.log
+
+# CLI / test binaries
+framedump
+test_basic
+*.exe
+
+# Editor / OS
+.idea/
+.vscode/
+.DS_Store

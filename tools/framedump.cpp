@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "frameparse.h"
+#include "frameparse_tools.h"
 
 static std::vector<uint8_t> read_file(const char *path, bool *ok) {
     std::vector<uint8_t> bytes;
@@ -49,8 +50,13 @@ int main(int argc, char **argv) {
     }
 
     fp_status st = fp_parse(bytes.data(), bytes.size(), &frame);
-    printf("status        : %s\n", fp_strstatus(st));
+    char status_buf[64];
+    char summary_buf[256];
+    fp_render_status(st, status_buf, sizeof(status_buf));
+    printf("status        : %s\n", status_buf);
     if (st == FP_OK) {
+        fp_frame_summary(&frame, summary_buf, sizeof(summary_buf));
+        printf("summary       : %s\n", summary_buf);
         printf("records       : %u\n", frame.record_count);
         printf("metadata recs : %u\n", frame.metadata_count);
         printf("priority      : %u\n", frame.priority);
